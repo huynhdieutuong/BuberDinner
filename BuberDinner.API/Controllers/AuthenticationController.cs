@@ -24,14 +24,12 @@ namespace BuberDinner.API.Controllers
                 request.Email,
                 request.Password);
 
-            var response = new AuthenticationResponse
-            {
-                Id = authResult.Id,
-                FirstName = authResult.FirstName,
-                LastName = authResult.LastName,
-                Email = authResult.Email,
-                Token = authResult.Token
-            };
+            var response = new AuthenticationResponse(
+                    authResult.Id,
+                    authResult.FirstName,
+                    authResult.LastName,
+                    authResult.Email,
+                    authResult.Token);
 
             return Ok(response);
         }
@@ -41,14 +39,12 @@ namespace BuberDinner.API.Controllers
         {
             var authResult = _authenticationService.Login(request.Email, request.Password);
 
-            var response = new AuthenticationResponse
-            {
-                Id = authResult.Id,
-                FirstName = authResult.FirstName,
-                LastName = authResult.LastName,
-                Email = authResult.Email,
-                Token = authResult.Token
-            };
+            var response = new AuthenticationResponse(
+                    authResult.Id,
+                    authResult.FirstName,
+                    authResult.LastName,
+                    authResult.Email,
+                    authResult.Token);
 
             return Ok(response);
         }
