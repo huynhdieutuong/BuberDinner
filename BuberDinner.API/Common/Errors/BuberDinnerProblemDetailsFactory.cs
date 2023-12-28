@@ -3,11 +3,15 @@
 
 #nullable enable
 
+using BuberDinner.API.Common.Http;
+using ErrorOr;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
-namespace Microsoft.AspNetCore.Mvc.Infrastructure;
+namespace BuberDinner.API.Common.Errors;
 
 public class BuberDinnerProblemDetailsFactory : ProblemDetailsFactory
 {
@@ -92,6 +96,10 @@ public class BuberDinnerProblemDetailsFactory : ProblemDetailsFactory
         }
 
         // 4. Add a custom property to the ProblemDetails instance.
-        problemDetails.Extensions.Add("customProperty", "customValue");
+        var errors = httpContext?.Items[HttpContextItemKeys.Errors] as List<Error>;
+        if (errors is not null)
+        {
+            problemDetails.Extensions.Add("errorCodes", errors.Select(e => e.Code));
+        }
     }
 }
